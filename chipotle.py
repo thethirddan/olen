@@ -25,7 +25,7 @@ TOPPINGS = {
     'guacamole': 2.75,
     'tomato salsa': 2.5,
     'chili corn salsa': 1.75,
-    'tomatillo green chili salsa': 0.0
+    'tomatillo green chili salsa': 2.0
 }
 
 LOCATIONS = {
@@ -42,6 +42,12 @@ LOCATIONS = {
     'deerfield': 38,
     'springfield': 45
 }
+
+DISCOUNTS = {
+    'FLAT3': {'amount': 3, 'type': 'flat'},
+    'MAGIC': {'amount': 5, 'type': 'pct'},
+    'SUNDAYFUNDAY': {'amount': 10, 'type': 'pct'}
+} 
 
 order1 = ('manan', 'holyoke', 'FLAT3', 'chicken', 'white', 'pinto', False, 'queso blanco', 'cheese', 'fajita veggies', 'sour cream')
 order2 = ('allison', 'greenfield', 'MAGIC', 'carnitas', 'brown', 'black', True, 'cheese', 'fajita veggies', 'sour cream', 'guacamole', 'tomato salsa')
@@ -90,6 +96,17 @@ def get_toppings(order):
 
     return total_price
 
+def apply_discount(order, total):
+    code = order[2]
+    lookup_code = DISCOUNTS.get(code)
+    if lookup_code is not None:
+        if lookup_code['type'] == 'flat':
+            return total - lookup_code['amount']
+        elif lookup_code['type'] == 'pct':
+            return total * ((100 - lookup_code['amount']) / 100)
+
+    return total
+
 print(get_protein(order1))
 print(get_protein(order2))
 
@@ -104,3 +121,6 @@ print(get_burrito(order2))
 
 print(get_toppings(order1))
 print(get_toppings(order2))
+
+print(apply_discount(order1, 17.25))
+print(apply_discount(order2, 23.25))

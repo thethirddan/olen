@@ -1,111 +1,79 @@
-from enum import Enum
+# Price dictionaries
+PROTEINS = {
+    'chicken': 2.5,
+    'carnitas': 3.0,
+    'steak': 3.5,
+    'barbacoa': 3.5,
+    'veggies': 2.5
+}
 
-class Protein(Enum):
-    CHICKEN = ('chicken', 2.5)
-    CARNITAS = ('carnitas', 3.0)
-    STEAK = ('steak', 3.5)
-    BARBACOA = ('barbacoa', 3.5)
-    VEGGIES = ('veggies', 2.5)
+RICE = {
+    'white': 2.5,
+    'brown': 3.5
+}
 
-    @property
-    def name(self):
-        return self.value[0]
+BEANS = {
+    'pinto': 2.5,
+    'black': 2.5
+}
 
-    @property
-    def price(self):
-        return self.value[1]
+TOPPINGS = {
+    'queso blanco': 2.75,
+    'cheese': 2.0,
+    'fajita veggies': 2.5,
+    'sour cream': 2.5,
+    'guacamole': 2.75,
+    'tomato salsa': 2.5,
+    'chili corn salsa': 1.75,
+    'tomatillo green chili salsa': 0.0
+}
 
-class Rice(Enum):
-    WHITE = ('white', 2.5)
-    BROWN = ('brown', 3.5)
-
-    @property
-    def name(self):
-        return self.value[0]
-
-    @property
-    def price(self):
-        return self.value[1]
-
-class Beans(Enum):
-    PINTO = ('pinto', 2.5)
-    BLACK = ('black', 2.5)
-
-    @property
-    def name(self):
-        return self.value[0]
-
-    @property
-    def price(self):
-        return self.value[1]
-
-class Toppings(Enum):
-    QUESO_BLANCO = ('queso blanco', 2.75)
-    CHEESE = ('cheese', 2.0)
-    FAJITA_VEGGIES = ('fajita veggies', 2.5)
-    SOUR_CREAM = ('sour cream', 2.5)
-    GUACAMOLE = ('guacamole', 2.75)
-    TOMATO_SALSA = ('tomato salsa', 2.5)
-    CHILI_CORN_SALSA = ('chili corn salsa', 1.75)
-    TOMATILLO_GREEN_CHILI_SALSA = ('tomatillo green chili salsa', 0.0)
-
-    @property
-    def name(self):
-        return self.value[0]
-
-    @property
-    def price(self):
-        return self.value[1]
-
-class Locations(Enum):
-   AMHERST = 'amherst'
-   NORTH_AMHERST = 'north amherst'
-   SOUTH_AMHERST = 'south amherst'
-   HADLEY = 'hadley'
-   NORTHAMPTON = 'northampton'
-   SOUTH_HADLEY = 'south hadley'
-   BELCHERTOWN = 'belchertown'
-   SUNDERLAND = 'sunderland'
-   HOLYOKE = 'holyoke'
-   GREENFIELD = 'greenfield'
-   DEERFIELD = 'deerfield'
-   SPRINGFIELD = 'springfield'
+LOCATIONS = {
+    'amherst': 15,
+    'north amherst': 20,
+    'south amherst': 18,
+    'hadley': 10,
+    'northampton': 25,
+    'south hadley': 22,
+    'belchertown': 30,
+    'sunderland': 35,
+    'holyoke': 28,
+    'greenfield': 40,
+    'deerfield': 38,
+    'springfield': 45
+}
 
 order1 = ('manan', 'holyoke', 'FLAT3', 'chicken', 'white', 'pinto', False, 'queso blanco', 'cheese', 'fajita veggies', 'sour cream')
 order2 = ('allison', 'greenfield', 'MAGIC', 'carnitas', 'brown', 'black', True, 'cheese', 'fajita veggies', 'sour cream', 'guacamole', 'tomato salsa')
 
 
-#get_protein_price
 def get_protein(order):
-    user_protein = order[3].upper()
-    try:
-        lookup_protein = Protein[user_protein]
-        return lookup_protein.price
-    except KeyError:
-        # probably print a warning here
+    user_protein = order[3].lower()
+    price = PROTEINS.get(user_protein)
+    if price is not None:
+        return price
+    else:
         print(f"Warning: Unknown protein '{user_protein}'")
         return 0
 
 def get_rice(order):
-    user_rice = order[4].upper()
-    try:
-        lookup_rice = Rice[user_rice]
-        return lookup_rice.price
-    except KeyError:
-        # probably print a warning here
+    user_rice = order[4].lower()
+    price = RICE.get(user_rice)
+    if price is not None:
+        return price
+    else:
         print(f"Warning: Unknown rice '{user_rice}'")
         return 0
 
 def get_beans(order):
-    user_beans = order[5].upper()
-    try:
-        lookup_beans = Beans[user_beans]
-        return lookup_beans.price
-    except KeyError:
-        # probably print a warning here
+    user_beans = order[5].lower()
+    price = BEANS.get(user_beans)
+    if price is not None:
+        return price
+    else:
         print(f"Warning: Unknown beans '{user_beans}'")
         return 0
-    
+
 def get_burrito(order):
     is_burrito = order[6]
     return 2 if is_burrito else 0
@@ -114,12 +82,10 @@ def get_toppings(order):
     user_toppings = order[7:]
     total_price = 0
     for top in user_toppings:
-        try:
-            top_upper = top.upper().replace(' ', '_')
-            lookup_top = Toppings[top_upper]
-            total_price += lookup_top.price
-        except KeyError:
-            # probably print a warning here
+        price = TOPPINGS.get(top)
+        if price is not None:
+            total_price += price
+        else:
             print(f"Warning: Unknown topping '{top}'")
 
     return total_price

@@ -119,8 +119,44 @@ def approximate_time(order):
     else:
         # this should never happen
         return 999
-    
 
+def generate_invoice(order):
+    name=order[0]
+    code = order[2]
+    user_protein = order[3].lower()
+    user_rice = order[4].lower()
+    user_beans = order[5].lower()
+    is_burrito = order[6]
+    toppings = ", ".join(order[7:])
+    protein_price = get_protein(order)
+    rice_price = get_rice(order)
+    beans_price = get_beans(order)
+    burrito_price = get_burrito(order)
+    toppings_price = get_toppings(order)
+
+    sub_total = protein_price + rice_price + beans_price + burrito_price + toppings_price
+    total_price = apply_discount(order, sub_total)
+    money_saved = sub_total - total_price
+    time_ready = approximate_time(order)
+
+    message = f"""
+Welcome to Chipotle Mexican Grill Hadley, {name}.
+Your invoice is displayed below:
+Protein: {user_protein} - ${protein_price}
+Rice: {user_rice} rice - ${rice_price}
+Beans: {user_beans} beans - ${beans_price}
+Burrito: {'Yes' if is_burrito else 'No'} - ${burrito_price}
+Toppings: {toppings} - ${toppings_price}
+Subtotal: ${sub_total}
+Discount Code: {code}
+Total: ${total_price}
+You Save: ${money_saved}
+Your order will be ready in {time_ready} minutes.
+Enjoy your meal and have a good day!"""
+
+    return message
+
+'''
 print(get_protein(order1))
 print(get_protein(order2))
 
@@ -141,3 +177,7 @@ print(apply_discount(order2, 23.25))
 
 print(approximate_time(order1))
 print(approximate_time(order2))
+'''
+
+print(generate_invoice(order1))
+print(generate_invoice(order2))

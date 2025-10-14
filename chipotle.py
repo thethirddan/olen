@@ -46,8 +46,8 @@ class Toppings(Enum):
     SOUR_CREAM = ('sour cream', 2.5)
     GUACAMOLE = ('guacamole', 2.75)
     TOMATO_SALSA = ('tomato salsa', 2.5)
-    CHILI_SALSA = ('chili corn salsa', 1.75)
-    TOMATILLO_SALSA = ('tomatillo green chili salsa', 0.0)
+    CHILI_CORN_SALSA = ('chili corn salsa', 1.75)
+    TOMATILLO_GREEN_CHILI_SALSA = ('tomatillo green chili salsa', 0.0)
 
     @property
     def name(self):

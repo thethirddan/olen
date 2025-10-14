@@ -106,6 +106,10 @@ def get_beans(order):
         print(f"Warning: Unknown beans '{user_beans}'")
         return 0
     
+def get_burrito(order):
+    is_burrito = order[6]
+    return 2 if is_burrito else 0
+
 print(get_protein(order1))
 print(get_protein(order2))
 
@@ -114,3 +118,6 @@ print(get_rice(order2))
 
 print(get_beans(order1))
 print(get_beans(order2))
+
+print(get_burrito(order1))
+print(get_burrito(order2))

@@ -30,16 +30,16 @@ TOPPINGS = {
 
 LOCATIONS = {
     'amherst': 15,
-    'north amherst': 20,
-    'south amherst': 18,
-    'hadley': 10,
-    'northampton': 25,
-    'south hadley': 22,
+    'north amherst': 15,
+    'south amherst': 15,
+    'hadley': 15,
+    'northampton': 30,
+    'south hadley': 30,
     'belchertown': 30,
-    'sunderland': 35,
-    'holyoke': 28,
-    'greenfield': 40,
-    'deerfield': 38,
+    'sunderland': 30,
+    'holyoke': 45,
+    'greenfield': 45,
+    'deerfield': 45,
     'springfield': 45
 }
 
@@ -86,11 +86,14 @@ def get_burrito(order):
 
 def get_toppings(order):
     user_toppings = order[7:]
+    user_protein = order[3].lower()
     total_price = 0
+
     for top in user_toppings:
         price = TOPPINGS.get(top)
         if price is not None:
-            total_price += price
+            if not ((top == 'fajita veggies' or top == 'guacamole') and user_protein == 'veggies'):
+                total_price += price
         else:
             print(f"Warning: Unknown topping '{top}'")
 
@@ -106,6 +109,17 @@ def apply_discount(order, total):
             return total * ((100 - lookup_code['amount']) / 100)
 
     return total
+
+def approximate_time(order):
+    user_location = order[1]
+    lookup_location = LOCATIONS.get(user_location)
+
+    if lookup_location is not None:
+        return lookup_location
+    else:
+        # this should never happen
+        return 999
+    
 
 print(get_protein(order1))
 print(get_protein(order2))
@@ -124,3 +138,6 @@ print(get_toppings(order2))
 
 print(apply_discount(order1, 17.25))
 print(apply_discount(order2, 23.25))
+
+print(approximate_time(order1))
+print(approximate_time(order2))

@@ -110,6 +110,20 @@ def get_burrito(order):
     is_burrito = order[6]
     return 2 if is_burrito else 0
 
+def get_toppings(order):
+    user_toppings = order[7:]
+    total_price = 0
+    for top in user_toppings:
+        try:
+            top_upper = top.upper().replace(' ', '_')
+            lookup_top = Toppings[top_upper]
+            total_price += lookup_top.price
+        except KeyError:
+            # probably print a warning here
+            print(f"Warning: Unknown topping '{top}'")
+
+    return total_price
+
 print(get_protein(order1))
 print(get_protein(order2))
 
@@ -121,3 +135,6 @@ print(get_beans(order2))
 
 print(get_burrito(order1))
 print(get_burrito(order2))
+
+print(get_toppings(order1))
+print(get_toppings(order2))

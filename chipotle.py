@@ -108,3 +108,9 @@ def get_beans(order):
     
 print(get_protein(order1))
 print(get_protein(order2))
+
+print(get_rice(order1))
+print(get_rice(order2))
+
+print(get_beans(order1))
+print(get_beans(order2))
